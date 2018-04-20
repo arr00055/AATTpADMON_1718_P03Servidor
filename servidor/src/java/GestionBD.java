@@ -1,7 +1,14 @@
 import java.sql.*;
- 
+ /**
+  * Clase GestionBD.
+  * 
+  * En esta clase se implementa todo lo necesario para realizar la conexion con 
+  * la BD. 
+  * 
+  * @author Alex
+  */
 public class GestionBD {
-    //Variables Grobales.
+    //Variables Grobales para el driver y la URL donde se encuentra la BD MySQL.
     public  String DRIVER_MYSQL = "com.mysql.jdbc.Driver"; 
     public  String URL_MYSQL = "jdbc:mysql://localhost:3306/usuarios";
     public  Connection conn;
@@ -11,7 +18,11 @@ public class GestionBD {
             cargarDriver();
     }
     
-    /*Metodo cargarDriver -> Carga el driver necesario para la BD MySQL.*/
+    /**
+     * Metodo cargarDriver.
+     * 
+     * Carga el driver necesario para la BD MySQL.
+     */
     private void cargarDriver() {
         try {
 	     Class.forName(DRIVER_MYSQL);
@@ -21,7 +32,11 @@ public class GestionBD {
 	}
     }
     
-    /*Metodo getConexion -> Realiza la conexion con la BD.*/
+    /**
+     * Metodo getConexion.
+     * 
+     * Realiza la conexion con la BD, siendo necesario introducir el usuario y la pass de la BD.
+     */
     public void getConexion(){
 	try {
 		conn = DriverManager.getConnection(URL_MYSQL,"root","admin!6593");
@@ -31,7 +46,12 @@ public class GestionBD {
 	} 	
     }
     
-    /*Metodo MostrarUsuarios -> Muestra los usuarios de la tabla clientes que hay en ese momento.*/
+    /**
+     * Metodo MostrarUsuarios.
+     * 
+     * Muestra los usuarios de la tabla clientes que hay introducidos en el momento de la consulta.
+     * @throws SQLException 
+     */
     public void MostrarUsuarios() throws SQLException{
         ResultSet rs = null;
 	getConexion();
@@ -54,8 +74,15 @@ public class GestionBD {
 		    }
 		}
     
-    /*Metodo BuscarUsuario -> Busca en la BD un usuario en funcion de su cuenta de usuario y su clave asociada entregada en 
-      el cliente previamente y lo muestra por pantalla con System.*/
+    /**
+     * Metodo BuscarUsuario. 
+     * 
+     * Busca en la BD un usuario en funcion de su cuenta de usuario y su clave asociada entregados en el cliente 
+     * previamente y lo muestra por pantalla con System.
+     * @param usuario
+     * @param clave
+     * @throws SQLException 
+     */
     public void BuscarUsuario(String usuario, String clave) throws SQLException{
 	ResultSet rs = null;
 	String sql="SELECT * FROM clientes WHERE `usuario`= ? AND `clave`= ?";
@@ -80,10 +107,18 @@ public class GestionBD {
 		    }
 		}
     
-    /*Metodo BuscarUsuario -> Busca en la BD un usuario en funcion de su cuenta de usuario y su clave asociada entregada en 
-      el cliente previamente. Una vez lo obtiene de la BD MySQL creada para el servidor lee los valores y realiza la 
-      comprobacion la cual enviara de vuelta como resultado siendo true o false para validar el login si este usuario existe
-      o no en la BD.*/
+    /**
+     * Metodo RegresarUsuario 
+     * 
+     * Busca en la BD un usuario en funcion de su cuenta de usuario y su clave asociada entregada en el cliente previamente.
+     * Una vez lo obtiene de la BD MySQL creada para el servidor lee los valores y realza la comprobacion la cual enviara de
+     * vuelta como resultado siendo true o false para validar el login si este usuario esta creado o no en la BD.
+     * 
+     * @param usuario
+     * @param clave
+     * @return
+     * @throws SQLException 
+     */
     public boolean RegresarUsuario(String usuario, String clave) throws SQLException{
 	ResultSet rs = null;
         String usser ="";
